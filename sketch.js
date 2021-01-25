@@ -11,7 +11,12 @@ function setup() {
   engine = Matter.Engine.create();
   world = engine.world;
 
-  ground = new Ground(width/2, height, outerWidth, 20)
+  ground = new Ground(width/2, height, outerWidth, 20);
+
+
+  if(mouseIsPressed === true){
+    particles.push(new Particle(mouseX, 10, 10, 10));
+  }
 
   for(var k = 0; k <= width; k = k + 90){
     divisions.push(new Divisions(k, height-divisionHeight/2, 10, divisionHeight))
@@ -32,9 +37,9 @@ function setup() {
 }
 
 function draw() {
-  background("black");  
+  background("black");
 
-  console.log(mouseX, mouseY)
+  //console.log(mouseX, mouseY)
 
   Matter.Engine.update(engine);
 
@@ -57,10 +62,6 @@ function draw() {
     divisions[i].display();
   }
 
-  if(frameCount % 20 === 0){
-    particles.push(new Particle(random(width/2-10, width/2+10), 10, 10))
-  }
-
   for (var i = 0; i < particles.length; i++) {
     particles[i].display();
 
@@ -80,25 +81,17 @@ function draw() {
     score = score + 400;
   }
   }
-  
+
+  if (mouseIsPressed === true) {
+    particles.push(new Particle(mouseX, 10, 10, 10));
+  }
+
   for (var k = 0; k < plinko.length; k++){
     plinko[k].display();
-  }  
+  }
 
   noFill();
   strokeWeight(10)
   stroke("cyan");
   rect(width/2, height/2, width, height)
 }
-/*function  getMousePos(canvas, evt) {
-  var rect = canvas.getBoundingClientRect(), // abs. size of element
-      scaleX = canvas.width / rect.width,    // relationship bitmap vs. element for X
-      scaleY = canvas.height / rect.height;  // relationship bitmap vs. element for Y
-
-  return {
-    x: (evt.clientX - rect.left) * scaleX,   // scale mouse coordinates after they have
-    y: (evt.clientY - rect.top) * scaleY     // been adjusted to be relative to element
-  }
-}*/
-
-//0, 89, 179, 269, 359, 539, 650
